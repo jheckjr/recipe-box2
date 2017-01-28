@@ -1,3 +1,23 @@
-<p>
-  recipe-item works!
-</p>
+<div class="title">
+  {{ recipe.name }}
+</div>
+<div class="content"
+    *ngIf="!userEdit">
+  <h4>Ingredients</h4>
+  <div class="list">
+    <div class="item"
+        *ngFor="let ingredient of recipe.ingredients">
+      {{ ingredient }}
+    </div>
+  </div>
+  <button type="button"
+      class="edit"
+      (click)="editClicked($event)">
+    Edit
+  </button>
+  <button type="button"
+      class="delete"
+      (click)="deleteClicked($event)">
+    Delete
+  </button>
+</div>
