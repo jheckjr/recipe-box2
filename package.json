@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "lint": "tslint \"src/**/*.ts\"",
-    "test": "ng test",
+    "test": "ng test --browsers PhantomJS",
     "pree2e": "webdriver-manager update",
     "e2e": "protractor",
     "postinstall": "npm install extract-text-webpack-plugin@2.0.0-rc.0 && ng build --prod"
@@ -45,7 +45,10 @@
     "karma-chrome-launcher": "^2.0.0",
     "karma-cli": "^1.0.1",
     "karma-jasmine": "^1.0.2",
+    "karma-phantomjs-launcher": "^1.0.2",
     "karma-remap-istanbul": "^0.2.1",
+    "karma-sourcemap-loader": "^0.3.7",
+    "phantomjs": "^2.1.7",
     "protractor": "4.0.9",
     "ts-node": "1.2.1",
     "tslint": "^4.0.2",
