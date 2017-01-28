@@ -2,12 +2,16 @@
 
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { RecipeListComponent } from './recipe-list/recipe-list.component';
+import { RecipeItemComponent } from './recipe-item/recipe-item.component';
 
 describe('AppComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        RecipeListComponent,
+        RecipeItemComponent
       ],
     });
     TestBed.compileComponents();
