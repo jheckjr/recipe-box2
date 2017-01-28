@@ -9,8 +9,8 @@
     "test": "ng test",
     "pree2e": "webdriver-manager update",
     "e2e": "protractor",
-    "preinstall": "npm install -g http-server  extract-text-webpack-plugin@2.0.0-rc.0",
-    "postinstall": "ng build --prod"
+    "preinstall": "npm install -g http-server",
+    "postinstall": "npm install extract-text-webpack-plugin@2.0.0-rc.0 && ng build --prod"
   },
   "private": true,
   "dependencies": {
