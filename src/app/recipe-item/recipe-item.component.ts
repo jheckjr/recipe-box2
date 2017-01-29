@@ -12,9 +12,11 @@ export class RecipeItemComponent implements OnInit {
   @Input() selected: boolean;
   @Input() userEdit: boolean;
   @Output() buttonClicked: EventEmitter<RecipeItemEvent>;
+  @Output() toggleSelected: EventEmitter<string>;
 
   constructor() {
     this.buttonClicked = new EventEmitter<RecipeItemEvent>();
+    this.toggleSelected = new EventEmitter<string>();
   }
 
   ngOnInit() { }
@@ -34,6 +36,11 @@ export class RecipeItemComponent implements OnInit {
       recipe: this.recipe
     };
     this.buttonClicked.emit(recipeItemEvent);
+    event.preventDefault();
+  }
+
+  toggleClicked(event: any) {
+    this.toggleSelected.emit(this.recipe.name);
     event.preventDefault();
   }
 }

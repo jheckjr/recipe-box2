@@ -32,6 +32,7 @@ describe('RecipeItemComponent:', () => {
     component.userEdit = false;
 
     spyOn(component.buttonClicked, 'emit');
+    spyOn(component.toggleSelected, 'emit');
 
     fixture.detectChanges();
   });
@@ -90,4 +91,12 @@ describe('RecipeItemComponent:', () => {
 
     expect(component.buttonClicked.emit).toHaveBeenCalledWith(editEvent);
   });
+
+  it('should emit a toggle event when the title is clicked', () => {
+    let titleEl = fixture.debugElement.query(By.css('.title')).nativeElement;
+    titleEl.dispatchEvent(new Event('click'));
+    fixture.detectChanges();
+
+    expect(component.toggleSelected.emit).toHaveBeenCalledWith(recipe.name);
+  })
 });
