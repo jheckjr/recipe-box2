@@ -22,20 +22,20 @@ export class RecipeItemComponent implements OnInit {
   ngOnInit() { }
 
   editClicked(event: any) {
-    let recipeItemEvent: RecipeItemEvent = {
+    let editEvent: RecipeItemEvent = {
       eventType: RecipeItemEventType.Edit,
       recipe: null
     };
-    this.buttonClicked.emit(recipeItemEvent);
+    this.buttonClicked.emit(editEvent);
     event.preventDefault();
   }
 
   deleteClicked(event: any) {
-    let recipeItemEvent: RecipeItemEvent = {
+    let deleteEvent: RecipeItemEvent = {
       eventType: RecipeItemEventType.Delete,
       recipe: this.recipe
     };
-    this.buttonClicked.emit(recipeItemEvent);
+    this.buttonClicked.emit(deleteEvent);
     event.preventDefault();
   }
 

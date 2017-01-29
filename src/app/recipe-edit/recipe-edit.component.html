@@ -1,3 +1,44 @@
-<p>
-  recipe-edit works!
-</p>
+<form class="form"
+    [formGroup]="formGroup"
+    novalidate
+    (ngSubmit)="saveRecipe(formGroup)">
+
+  <div class="form-group required"
+      [class.error]="formGroup.controls.name.invalid && formGroup.controls.name.touched">
+    <label>Name</label>
+    <input type="text"
+        class="form-control"
+        formControlName="name">
+    <small *ngIf="formGroup.controls.name.invalid && formGroup.controls.name.touched">
+      Recipe name is required.
+    </small>
+  </div>
+
+  <div class="required"
+      formArrayName="ingredients"
+      [class.error]="formGroup.controls.ingredients.invalid && formGroup.controls.ingredients.controls[formGroup.controls.ingredients.length - 1].touched">
+    <label>Ingredients</label>
+    <div class="ingredient-input"
+        *ngFor="let ingredient of formGroup.controls.ingredients.controls; let idx=index">
+      <i class="remove"
+          *ngIf="formGroup.controls.ingredients.controls.length > 1"
+          (click)="removeIngredient(idx)">X</i>
+    </div>
+    <small *ngIf="formGroup.controls.ingredients.invalid && formGroup.controls.ingredients.controls[formGroup.controls.ingredients.length - 1].touched">
+        Ingredients cannot be empty.
+    </small>
+  </div>
+  <div>
+    <a class="add"
+        (click)="addIngredient()">
+        + Add another ingredient
+    </a>
+  </div>
+
+  <button class="save"
+      type="submit"
+      [disabled]="formGroup.invalid">Save</button>
+  <button class="cancel"
+      type="button"
+      (click)="cancelClicked($event)">Cancel</button>
+</form>

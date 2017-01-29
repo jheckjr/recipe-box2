@@ -9,8 +9,11 @@ import { FormBuilder,
   ReactiveFormsModule } from '@angular/forms';
 
 import { RecipeEditComponent } from './recipe-edit.component';
-import { Recipe } from '../models';
+import { Recipe, RecipeItemEvent, RecipeItemEventType } from '../models';
 
+/* TODO: test save/cancel/other with null recipe
+   TODO: test appearance of error smalls
+ */
 fdescribe('RecipeEditComponent:', () => {
   let component: RecipeEditComponent;
   let fixture: ComponentFixture<RecipeEditComponent>;
@@ -35,6 +38,9 @@ fdescribe('RecipeEditComponent:', () => {
     fixture = TestBed.createComponent(RecipeEditComponent);
     component = fixture.componentInstance;
     component.recipe = recipe;
+
+    spyOn(component.buttonClicked, 'emit');
+
     fixture.detectChanges();
   });
 
@@ -63,6 +69,69 @@ fdescribe('RecipeEditComponent:', () => {
       .toBeTruthy();
   });
 
+  it('should emit a save event when the save button is clicked', () => {
+    let saveEvent: RecipeItemEvent = {
+      eventType: RecipeItemEventType.Save,
+      recipe: recipe
+    };
+    let saveButton = fixture.debugElement.query(By.css('button.save')).nativeElement;
+    saveButton.dispatchEvent(new Event('click'));
+    fixture.detectChanges();
+
+    expect(component.buttonClicked.emit).toHaveBeenCalledWith(saveEvent);
+  });
+
+  it('should emit a cancel event when the cancel button is clicked', () => {
+    let cancelEvent: RecipeItemEvent = {
+      eventType: RecipeItemEventType.Cancel,
+      recipe: null
+    };
+    let cancelButton = fixture.debugElement.query(By.css('button.cancel')).nativeElement;
+    cancelButton.dispatchEvent(new Event('click'));
+    fixture.detectChanges();
+
+    expect(component.buttonClicked.emit).toHaveBeenCalledWith(cancelEvent);
+  });
+
+  it('should add an ingredient', () => {
+    let ingredientArray = <FormArray>component.formGroup.controls['ingredients'];
+    let numIngredients = ingredientArray.length;
+    let addIngredient = fixture.debugElement.query(By.css('a.add')).nativeElement;
+    addIngredient.dispatchEvent(new Event('click'));
+    fixture.detectChanges();
+
+    expect(ingredientArray.length).toEqual(numIngredients + 1);
+    expect(ingredientArray.controls[ingredientArray.length - 1].value)
+      .toEqual('');
+  });
+
+  it('should remove an ingredient', () => {
+    let ingredientArray = <FormArray>component.formGroup.controls['ingredients'];
+    let numIngredients = ingredientArray.length;
+    let removeIngredient = fixture.debugElement.queryAll(By.css('i.remove'))[0]
+      .nativeElement;
+    removeIngredient.dispatchEvent(new Event('click'));
+    fixture.detectChanges();
+
+    expect(ingredientArray.length).toEqual(numIngredients - 1);
+    expect(ingredientArray.controls[0].value)
+      .toContain(recipe.ingredients[1]);
+  });
+
+  it('should not remove an ingredient if only one left', () => {
+    let ingredientArray = <FormArray>component.formGroup.controls['ingredients'];
+    let removeIngredient = fixture.debugElement.queryAll(By.css('i.remove'))[0]
+      .nativeElement;
+    removeIngredient.dispatchEvent(new Event('click'));
+    fixture.detectChanges();
+    component.removeIngredient(0);
+    fixture.detectChanges();
+
+    expect(fixture.debugElement.queryAll(By.css('i.remove')).length).toEqual(0);
+    expect(ingredientArray.length).toEqual(1);
+    expect(ingredientArray.controls[0].value)
+      .toContain(recipe.ingredients[1]);
+  });
 });
 
 fdescribe('RecipeEditComponent: null recipe input', () => {
@@ -95,4 +164,5 @@ fdescribe('RecipeEditComponent: null recipe input', () => {
     expect((<FormArray>formGroup.controls['ingredients']).controls[0].invalid)
       .toBeTruthy();
   });
+
 });
