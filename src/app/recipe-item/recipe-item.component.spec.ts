@@ -2,11 +2,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 import { RecipeItemComponent } from './recipe-item.component';
+import { RecipeEditComponent } from '../recipe-edit/recipe-edit.component';
 import { Recipe, RecipeItemEvent, RecipeItemEventType } from '../models';
 
-describe('RecipeItemComponent:', () => {
+fdescribe('RecipeItemComponent:', () => {
   let component: RecipeItemComponent;
   let fixture: ComponentFixture<RecipeItemComponent>;
   let recipe: Recipe = {
@@ -19,7 +21,9 @@ describe('RecipeItemComponent:', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RecipeItemComponent]
+      declarations: [RecipeItemComponent, RecipeEditComponent],
+      imports: [ReactiveFormsModule],
+      providers: [FormBuilder]
     })
       .compileComponents();
   }));
@@ -58,7 +62,8 @@ describe('RecipeItemComponent:', () => {
 
   it('should show non-editable content if userEdit false', () => {
     let contentEl = fixture.debugElement.query(By.css('.content')).nativeElement;
-    expect(contentEl).toBeDefined();
+    expect(contentEl).not.toBeNull();
+    expect(fixture.debugElement.query(By.css('app-recipe-edit'))).toBeNull();
   });
 
   it('should show editable content if userEdit true', () => {
@@ -66,6 +71,7 @@ describe('RecipeItemComponent:', () => {
     fixture.detectChanges();
     let contentEl = fixture.debugElement.query(By.css('.content'));
     expect(contentEl).toBeNull();
+    expect(fixture.debugElement.query(By.css('app-recipe-edit'))).not.toBeNull();
   });
 
   it('should emit a delete event when the delete button is clicked', () => {
@@ -98,5 +104,44 @@ describe('RecipeItemComponent:', () => {
     fixture.detectChanges();
 
     expect(component.toggleSelected.emit).toHaveBeenCalledWith(recipe.name);
-  })
+  });
+
+  it('should emit a save event after receiving a save event from edit', () => {
+    component.userEdit = true;
+    fixture.detectChanges();
+    let editComponent = fixture.debugElement.query(By.css('app-recipe-edit'))
+      .nativeElement;
+    editComponent.dispatchEvent(new Event('buttonClicked'));
+    fixture.detectChanges();
+
+    expect(component.buttonClicked.emit).toHaveBeenCalled();
+  });
+
+  it('should save an edited recipe', () => {
+    let saveEvent: RecipeItemEvent = {
+      eventType: RecipeItemEventType.Save,
+      recipe: {
+        name: 'Cereal',
+        ingredients: ['cereal', 'milk']
+      }
+    };
+    component.handleRecipeEdit(saveEvent);
+    fixture.detectChanges();
+
+    expect(component.buttonClicked.emit).toHaveBeenCalledWith(saveEvent);
+    expect(component.recipe).toEqual(saveEvent.recipe);
+  });
+
+  it('should not save an edited recipe if the edit was cancelled', () => {
+    let initialRecipe = component.recipe;
+    let cancelEvent: RecipeItemEvent = {
+      eventType: RecipeItemEventType.Cancel,
+      recipe: null
+    };
+    component.handleRecipeEdit(cancelEvent);
+    fixture.detectChanges();
+
+    expect(component.buttonClicked.emit).toHaveBeenCalledWith(cancelEvent);
+    expect(component.recipe).toEqual(initialRecipe);
+  });
 });

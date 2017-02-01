@@ -2,23 +2,28 @@
     (click)="toggleClicked($event)">
   {{ recipe.name }}
 </div>
-<div class="content"
-    *ngIf="!userEdit">
-  <h4>Ingredients</h4>
-  <div class="list">
-    <div class="item"
-        *ngFor="let ingredient of recipe.ingredients">
-      {{ ingredient }}
+<div>
+  <div class="content"
+      *ngIf="!userEdit">
+    <h4>Ingredients</h4>
+    <div class="list">
+      <div class="item"
+          *ngFor="let ingredient of recipe.ingredients">
+        {{ ingredient }}
+      </div>
     </div>
-  </div>
-  <button type="button"
-      class="edit"
-      (click)="editClicked($event)">
+    <button type="button"
+        class="edit"
+        (click)="editClicked($event)">
     Edit
   </button>
-  <button type="button"
-      class="delete"
-      (click)="deleteClicked($event)">
+    <button type="button"
+        class="delete"
+        (click)="deleteClicked($event)">
     Delete
   </button>
+  </div>
+  <app-recipe-edit [recipe]="recipe"
+      (buttonClicked)="handleRecipeEdit($event)"
+      *ngIf="userEdit"></app-recipe-edit>
 </div>

@@ -11,7 +11,7 @@ import { FormBuilder,
 import { RecipeEditComponent } from './recipe-edit.component';
 import { Recipe, RecipeItemEvent, RecipeItemEventType } from '../models';
 
-fdescribe('RecipeEditComponent:', () => {
+describe('RecipeEditComponent:', () => {
   let component: RecipeEditComponent;
   let fixture: ComponentFixture<RecipeEditComponent>;
   let recipe: Recipe = {
@@ -135,7 +135,7 @@ fdescribe('RecipeEditComponent:', () => {
   });
 });
 
-fdescribe('RecipeEditComponent null recipe input:', () => {
+describe('RecipeEditComponent null recipe input:', () => {
   let component: RecipeEditComponent;
   let fixture: ComponentFixture<RecipeEditComponent>;
 
