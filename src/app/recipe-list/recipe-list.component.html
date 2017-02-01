@@ -1,2 +1,8 @@
-<app-recipe-item [recipe]="recipe"
-    (buttonClicked)="handleRecipeItemEvent($event)"></app-recipe-item>
+<div class="list">
+  <app-recipe-item *ngFor="let recipe of recipes"
+      [recipe]="recipe"
+      selected="false"
+      userEdit="true"
+      (buttonClicked)="handleRecipeEvent($event)"
+      (toggleSelected)="handleRecipeToggle($event)"></app-recipe-item>
+</div>

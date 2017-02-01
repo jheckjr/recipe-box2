@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { RecipeItemComponent } from '../recipe-item/recipe-item.component';
 
+import { RecipeItemComponent } from '../recipe-item/recipe-item.component';
+import { RecipeEditComponent } from '../recipe-edit/recipe-edit.component';
 import { Recipe } from '../models';
 
 @Component({
@@ -9,22 +10,19 @@ import { Recipe } from '../models';
   styleUrls: ['./recipe-list.component.css']
 })
 export class RecipeListComponent implements OnInit {
-  recipe: Recipe;
+  recipes: Recipe[];
 
   constructor() {
-    this.recipe = {
-      name: 'Oatmeal',
-      ingredients: [
-        '1 pkt. oatmeal',
-        '2/3 cup milk'
-      ]
-    };
   }
 
   ngOnInit() {
   }
 
-  handleRecipeItemEvent(event: any) {
+  handleRecipeEvent(event: any) {
+
+  }
+
+  handleRecipeToggle(event: any) {
 
   }
 }
