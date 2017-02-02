@@ -1,7 +1,7 @@
 <div class="list">
   <app-recipe-item *ngFor="let recipe of recipes"
       [recipe]="recipe"
-      selected="false"
+      selected="recipe === currentRecipe"
       userEdit="true"
       (buttonClicked)="handleRecipeEvent($event)"
       (toggleSelected)="handleRecipeToggle($event)"></app-recipe-item>

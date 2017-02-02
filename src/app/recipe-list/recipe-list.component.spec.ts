@@ -31,16 +31,43 @@ fdescribe('RecipeListComponent:', () => {
     fixture = TestBed.createComponent(RecipeListComponent);
     component = fixture.componentInstance;
     component.recipes = testRecipes;
+    component.currentRecipe = testRecipes[0].name;
+    component.userEditing = false;
+
+    spyOn(component, 'handleRecipeToggle').and.callThrough();
+
     fixture.detectChanges();
   });
 
-  it('should contain a RecipeItemComponent', () => {
+  it('should initialize the component', () => {
     expect(component).toBeTruthy();
     expect(component.recipes).toEqual(testRecipes);
+    expect(component.currentRecipe).toEqual(testRecipes[0].name);
+    expect(component.userEditing).toBeFalsy();
   });
 
-  it('should display a list of recipes', () => {
+  it('should display a list of RecipeItemComponents', () => {
     let recipeList = fixture.debugElement.queryAll(By.css('app-recipe-item'));
     expect(recipeList.length).toEqual(testRecipes.length);
   });
+
+  it('should toggle the selected recipe', () => {
+    let itemComponent = fixture.debugElement.queryAll(By.css('app-recipe-item'))[0]
+      .nativeElement;
+    itemComponent.dispatchEvent(new Event('toggleSelected'));
+    fixture.detectChanges();
+
+    expect(component.handleRecipeToggle).toHaveBeenCalled();
+
+    component.handleRecipeToggle(component.currentRecipe);
+    fixture.detectChanges();
+
+    expect(component.currentRecipe).toBeNull();
+
+    component.handleRecipeToggle(component.recipes[0].name);
+    fixture.detectChanges();
+
+    expect(component.currentRecipe).toEqual(component.recipes[0].name);
+  });
+
 });
