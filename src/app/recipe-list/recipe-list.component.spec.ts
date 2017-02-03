@@ -35,6 +35,7 @@ fdescribe('RecipeListComponent:', () => {
     component.userEditing = false;
 
     spyOn(component, 'handleRecipeToggle').and.callThrough();
+    spyOn(component, 'handleRecipeEvent').and.callThrough();
 
     fixture.detectChanges();
   });
@@ -68,6 +69,15 @@ fdescribe('RecipeListComponent:', () => {
     fixture.detectChanges();
 
     expect(component.currentRecipe).toEqual(component.recipes[0].name);
+  });
+
+  it('should handle recipe events', () => {
+    let itemComponent = fixture.debugElement.queryAll(By.css('app-recipe-item'))[0]
+      .nativeElement;
+    itemComponent.dispatchEvent(new Event('buttonClicked'));
+    fixture.detectChanges();
+
+    expect(component.handleRecipeEvent).toHaveBeenCalled();
   });
 
 });
