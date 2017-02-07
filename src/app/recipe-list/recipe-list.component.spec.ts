@@ -79,5 +79,59 @@ fdescribe('RecipeListComponent:', () => {
 
     expect(component.handleRecipeEvent).toHaveBeenCalled();
   });
+  
+  it('should handle edit events', () => {
+    let editEvent: RecipeItemEvent = {
+      eventType: RecipeItemEventType.Edit,
+      recipe: null
+    };
+    component.handleRecipeEvent(editEvent);
+    fixture.detectChanges();
+    
+    expect(component.userEditing).toBeTruthy();
+  });
 
+  it('should handle cancel events', () => {
+    let cancelEvent: RecipeItemEvent = {
+      eventType: RecipeItemEventType.Cancel,
+      recipe: null
+    };
+    component.handleRecipeEvent(cancelEvent);
+    fixture.detectChanges();
+    
+    expect(component.userEditing).toBeFalsy();
+  });
+  
+  it('should handle delete events', () => {
+    let deleteEvent: RecipeItemEvent = {
+      eventType: RecipeItemEventType.Delete,
+      recipe: testRecipes[0]
+    };
+    let numRecipes = component.recipes.length;
+    component.handleRecipeEvent(deleteEvent);
+    fixture.detectChanges();
+    
+    expect(component.recipes.length).toEqual(numRecipes - 1);
+    expect(component.recipes.indexOf(testRecipes[0])).toEqual(-1);
+    expect(component.currentRecipe).toBeNull();
+  });
+  
+  it('should handle save events', () => {
+    let saveEvent: RecipeItemEvent = {
+      eventType: RecipeItemEventType.Save,
+      recipe: { 
+        name: 'Coffee', 
+        ingredients: ['1 cup water', '3 Tbs. ground coffee bean'] 
+      }
+    };
+    let numRecipes = component.recipes.length;
+    component.handleRecipeEvent(saveEvent);
+    fixture.detectChanges();
+    
+    expect(component.recipes.length).toEqual(numRecipes + 1);
+    expect(component.recipes[numRecipes].name).toEqual(saveEvent.recipe.name);
+    expect(component.currentRecipe).toEqual(saveEvent.recipe.name);
+  });
+  
+  // Add editcomponent
 });

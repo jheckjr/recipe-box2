@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { RecipeItemComponent } from '../recipe-item/recipe-item.component';
 import { RecipeEditComponent } from '../recipe-edit/recipe-edit.component';
-import { Recipe } from '../models';
+import { Recipe, RecipeItemEventType } from '../models';
 import { testRecipes } from './test/test-recipes';
 
 @Component({
@@ -25,7 +25,28 @@ export class RecipeListComponent implements OnInit {
   }
 
   handleRecipeEvent(event: any) {
-
+    switch(event.eventType) {
+      case RecipeItemEventType.Edit:
+        this.userEditing = true;
+        break;
+      case RecipeItemEventType.Cancel:
+        this.userEditing = false;
+        break;
+      case RecipeItemEventType.Delete:
+        if (this.currentRecipe === event.recipe.name) {
+          let recipeIdx = this.recipes.indexOf(event.recipe);
+          this.recipes = [...this.recipes.slice(0, recipeIdx),
+            ...this.recipes.slice(recipeIdx + 1)];
+          this.currentRecipe = null;
+        }
+        break;
+      case RecipeItemEventType.Save:
+        this.recipes.push(event.recipe);
+        this.currentRecipe = event.recipe.name;
+        break;
+      default:
+        break;
+    }
   }
 
   handleRecipeToggle(recipeName: string) {
