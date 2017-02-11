@@ -8,7 +8,7 @@ import { RecipeItemComponent } from './recipe-item.component';
 import { RecipeEditComponent } from '../recipe-edit/recipe-edit.component';
 import { Recipe, RecipeItemEvent, RecipeItemEventType } from '../models';
 
-describe('RecipeItemComponent:', () => {
+fdescribe('RecipeItemComponent:', () => {
   let component: RecipeItemComponent;
   let fixture: ComponentFixture<RecipeItemComponent>;
   let recipe: Recipe = {
@@ -32,7 +32,7 @@ describe('RecipeItemComponent:', () => {
     fixture = TestBed.createComponent(RecipeItemComponent);
     component = fixture.componentInstance;
     component.recipe = recipe;
-    component.selected = false;
+    component.selected = true;
     component.userEdit = false;
 
     spyOn(component.buttonClicked, 'emit');
@@ -44,7 +44,7 @@ describe('RecipeItemComponent:', () => {
   it('should initialize the component', () => {
     expect(component).toBeTruthy();
     expect(component.recipe).toEqual(recipe);
-    expect(component.selected).toBeFalsy();
+    expect(component.selected).toBeTruthy();
     expect(component.userEdit).toBeFalsy();
   });
 
@@ -73,6 +73,14 @@ describe('RecipeItemComponent:', () => {
     expect(contentEl).toBeNull();
     expect(fixture.debugElement.query(By.css('app-recipe-edit'))).toBeDefined();
   });
+
+  it('should not show content if selected false', () => {
+    component.selected = false;
+    fixture.detectChanges();
+    let contentEl = fixture.debugElement.query(By.css('.content'));
+    expect(contentEl).toBeNull();
+    expect(fixture.debugElement.query(By.css('app-recipe-edit'))).toBeNull();
+  })
 
   it('should emit a delete event when the delete button is clicked', () => {
     let deleteEvent: RecipeItemEvent = {

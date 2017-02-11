@@ -11,7 +11,7 @@ import { RecipeEditComponent } from '../recipe-edit/recipe-edit.component';
 import { testRecipes } from './test/test-recipes';
 import { RecipeItemEvent, RecipeItemEventType } from '../models';
 
-fdescribe('RecipeListComponent:', () => {
+describe('RecipeListComponent:', () => {
   let component: RecipeListComponent;
   let fixture: ComponentFixture<RecipeListComponent>;
 

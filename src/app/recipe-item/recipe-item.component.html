@@ -4,7 +4,7 @@
 </div>
 <div>
   <div class="content"
-      *ngIf="!userEdit">
+      *ngIf="selected && !userEdit">
     <h4>Ingredients</h4>
     <div class="list">
       <div class="item"
@@ -15,15 +15,15 @@
     <button type="button"
         class="edit"
         (click)="editClicked($event)">
-    Edit
-  </button>
+      Edit
+    </button>
     <button type="button"
         class="delete"
         (click)="deleteClicked($event)">
-    Delete
-  </button>
+      Delete
+    </button>
   </div>
   <app-recipe-edit [recipe]="recipe"
       (buttonClicked)="handleRecipeEdit($event)"
-      *ngIf="userEdit"></app-recipe-edit>
+      *ngIf="selected && userEdit"></app-recipe-edit>
 </div>
