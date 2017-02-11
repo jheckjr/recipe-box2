@@ -23,6 +23,9 @@
       <i class="remove"
           *ngIf="formGroup.controls.ingredients.controls.length > 1"
           (click)="removeIngredient(idx)">X</i>
+      <input type="text"
+          class="form-control"
+          [formControl]="formGroup.controls.ingredients.controls[idx]">
     </div>
     <small *ngIf="formGroup.controls.ingredients.invalid && formGroup.controls.ingredients.controls[formGroup.controls.ingredients.length - 1].touched">
         Ingredients cannot be empty.

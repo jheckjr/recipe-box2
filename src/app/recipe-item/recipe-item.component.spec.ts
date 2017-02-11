@@ -8,7 +8,7 @@ import { RecipeItemComponent } from './recipe-item.component';
 import { RecipeEditComponent } from '../recipe-edit/recipe-edit.component';
 import { Recipe, RecipeItemEvent, RecipeItemEventType } from '../models';
 
-fdescribe('RecipeItemComponent:', () => {
+describe('RecipeItemComponent:', () => {
   let component: RecipeItemComponent;
   let fixture: ComponentFixture<RecipeItemComponent>;
   let recipe: Recipe = {

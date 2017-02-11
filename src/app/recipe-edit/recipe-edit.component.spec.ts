@@ -11,7 +11,7 @@ import { FormBuilder,
 import { RecipeEditComponent } from './recipe-edit.component';
 import { Recipe, RecipeItemEvent, RecipeItemEventType } from '../models';
 
-describe('RecipeEditComponent:', () => {
+fdescribe('RecipeEditComponent:', () => {
   let component: RecipeEditComponent;
   let fixture: ComponentFixture<RecipeEditComponent>;
   let recipe: Recipe = {
@@ -49,6 +49,9 @@ describe('RecipeEditComponent:', () => {
     expect(formGroup).toBeDefined();
     expect(formGroup.controls['name']).toBeDefined();
     expect(formGroup.controls['ingredients']).toBeDefined();
+
+    let numInputs = fixture.debugElement.queryAll(By.css('input')).length;
+    expect(numInputs).toEqual(3);
   });
 
   it('should initialize and validate the form with the recipe contents', () => {
