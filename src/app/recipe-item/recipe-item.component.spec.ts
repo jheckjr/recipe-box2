@@ -62,7 +62,7 @@ describe('RecipeItemComponent:', () => {
 
   it('should show non-editable content if userEdit false', () => {
     let contentEl = fixture.debugElement.query(By.css('.content')).nativeElement;
-    expect(contentEl).not.toBeNull();
+    expect(contentEl).toBeDefined();
     expect(fixture.debugElement.query(By.css('app-recipe-edit'))).toBeNull();
   });
 
@@ -71,7 +71,7 @@ describe('RecipeItemComponent:', () => {
     fixture.detectChanges();
     let contentEl = fixture.debugElement.query(By.css('.content'));
     expect(contentEl).toBeNull();
-    expect(fixture.debugElement.query(By.css('app-recipe-edit'))).not.toBeNull();
+    expect(fixture.debugElement.query(By.css('app-recipe-edit'))).toBeDefined();
   });
 
   it('should emit a delete event when the delete button is clicked', () => {

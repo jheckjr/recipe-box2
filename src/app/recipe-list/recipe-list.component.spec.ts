@@ -9,6 +9,7 @@ import { RecipeItemComponent } from '../recipe-item/recipe-item.component';
 import { RecipeEditComponent } from '../recipe-edit/recipe-edit.component';
 
 import { testRecipes } from './test/test-recipes';
+import { RecipeItemEvent, RecipeItemEventType } from '../models';
 
 fdescribe('RecipeListComponent:', () => {
   let component: RecipeListComponent;
@@ -33,6 +34,7 @@ fdescribe('RecipeListComponent:', () => {
     component.recipes = testRecipes;
     component.currentRecipe = testRecipes[0].name;
     component.userEditing = false;
+    component.addRecipe = false;
 
     spyOn(component, 'handleRecipeToggle').and.callThrough();
     spyOn(component, 'handleRecipeEvent').and.callThrough();
@@ -50,6 +52,26 @@ fdescribe('RecipeListComponent:', () => {
   it('should display a list of RecipeItemComponents', () => {
     let recipeList = fixture.debugElement.queryAll(By.css('app-recipe-item'));
     expect(recipeList.length).toEqual(testRecipes.length);
+    expect(fixture.debugElement.query(By.css('app-recipe-edit.add-recipe'))).toBeNull();
+  });
+
+  it('should have an add recipe button', () => {
+    let addButton = fixture.debugElement.query(By.css('button.add-button'))
+      .nativeElement;
+    expect(addButton).toBeDefined();
+  });
+
+  it('should display an edit recipe component when the add button is clicked', () => {
+    let addButton = fixture.debugElement.query(By.css('button.add-button'))
+      .nativeElement;
+    addButton.dispatchEvent(new Event('click'));
+    fixture.detectChanges();
+
+    let editComponent = fixture.debugElement.query(By.css('app-recipe-edit.add-recipe'))
+      .nativeElement;
+    expect(component.currentRecipe).toBeNull();
+    expect(component.userEditing).toBeFalsy();
+    expect(editComponent).toBeDefined();
   });
 
   it('should toggle the selected recipe', () => {
@@ -79,7 +101,7 @@ fdescribe('RecipeListComponent:', () => {
 
     expect(component.handleRecipeEvent).toHaveBeenCalled();
   });
-  
+
   it('should handle edit events', () => {
     let editEvent: RecipeItemEvent = {
       eventType: RecipeItemEventType.Edit,
@@ -87,7 +109,7 @@ fdescribe('RecipeListComponent:', () => {
     };
     component.handleRecipeEvent(editEvent);
     fixture.detectChanges();
-    
+
     expect(component.userEditing).toBeTruthy();
   });
 
@@ -98,10 +120,10 @@ fdescribe('RecipeListComponent:', () => {
     };
     component.handleRecipeEvent(cancelEvent);
     fixture.detectChanges();
-    
+
     expect(component.userEditing).toBeFalsy();
   });
-  
+
   it('should handle delete events', () => {
     let deleteEvent: RecipeItemEvent = {
       eventType: RecipeItemEventType.Delete,
@@ -110,28 +132,28 @@ fdescribe('RecipeListComponent:', () => {
     let numRecipes = component.recipes.length;
     component.handleRecipeEvent(deleteEvent);
     fixture.detectChanges();
-    
+
     expect(component.recipes.length).toEqual(numRecipes - 1);
     expect(component.recipes.indexOf(testRecipes[0])).toEqual(-1);
     expect(component.currentRecipe).toBeNull();
   });
-  
+
   it('should handle save events', () => {
     let saveEvent: RecipeItemEvent = {
       eventType: RecipeItemEventType.Save,
-      recipe: { 
-        name: 'Coffee', 
-        ingredients: ['1 cup water', '3 Tbs. ground coffee bean'] 
+      recipe: {
+        name: 'Coffee',
+        ingredients: ['1 cup water', '3 Tbs. ground coffee bean']
       }
     };
     let numRecipes = component.recipes.length;
     component.handleRecipeEvent(saveEvent);
     fixture.detectChanges();
-    
+
     expect(component.recipes.length).toEqual(numRecipes + 1);
     expect(component.recipes[numRecipes].name).toEqual(saveEvent.recipe.name);
     expect(component.currentRecipe).toEqual(saveEvent.recipe.name);
   });
-  
+
   // Add editcomponent
 });

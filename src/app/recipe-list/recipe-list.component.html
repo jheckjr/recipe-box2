@@ -5,4 +5,15 @@
       userEdit="userEditing"
       (buttonClicked)="handleRecipeEvent($event)"
       (toggleSelected)="handleRecipeToggle($event)"></app-recipe-item>
+  <div *ngIf="addRecipe"
+      class="recipetitle">
+    Add New Recipe
+  </div>
+  <app-recipe-edit [recipe]="null"
+      (buttonClicked)="handleRecipeEvent($event)"
+      *ngIf="addRecipe"
+      class="add-recipe">
+  </app-recipe-edit>
 </div>
+<button class="add-button"
+    (click)="handleAddRecipe()">Add Recipe</button>

@@ -14,18 +14,20 @@ export class RecipeListComponent implements OnInit {
   recipes: Recipe[];
   currentRecipe: string;
   userEditing: boolean;
+  addRecipe: boolean;
 
   constructor() {
     this.recipes = testRecipes;
     this.currentRecipe = this.recipes[0].name;
     this.userEditing = false;
+    this.addRecipe = false;
   }
 
   ngOnInit() {
   }
 
   handleRecipeEvent(event: any) {
-    switch(event.eventType) {
+    switch (event.eventType) {
       case RecipeItemEventType.Edit:
         this.userEditing = true;
         break;
@@ -55,5 +57,12 @@ export class RecipeListComponent implements OnInit {
     } else {
       this.currentRecipe = recipeName;
     }
+    this.addRecipe = false;
+  }
+
+  handleAddRecipe() {
+    this.addRecipe = true;
+    this.currentRecipe = null;
+    this.userEditing = false;
   }
 }
