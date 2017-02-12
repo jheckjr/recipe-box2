@@ -1,0 +1,11 @@
+.box {
+  max-width: 500px;
+  margin: auto;
+  margin-top: 2%;
+  margin-bottom: 3%;
+}
+.box-header {
+  margin: auto;
+  text-align: center;
+  padding-top: 2%;
+}

@@ -18,12 +18,13 @@ export class RecipeListComponent implements OnInit {
 
   constructor() {
     this.recipes = testRecipes;
-  }
-
-  ngOnInit() {
     this.currentRecipe = null;
     this.userEditing = false;
     this.addRecipe = false;
+  }
+
+  ngOnInit() {
+
   }
 
   handleRecipeEvent(event: any) {
@@ -52,7 +53,6 @@ export class RecipeListComponent implements OnInit {
   }
 
   handleRecipeToggle(recipeName: string) {
-    console.log(recipeName);
     if (this.currentRecipe === recipeName) {
       this.currentRecipe = null;
     } else {

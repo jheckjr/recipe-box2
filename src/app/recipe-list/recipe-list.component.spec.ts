@@ -125,6 +125,8 @@ describe('RecipeListComponent:', () => {
   });
 
   it('should handle delete events', () => {
+    component.currentRecipe = testRecipes[0].name;
+    fixture.detectChanges();
     let deleteEvent: RecipeItemEvent = {
       eventType: RecipeItemEventType.Delete,
       recipe: testRecipes[0]

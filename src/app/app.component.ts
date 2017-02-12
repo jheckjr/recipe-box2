@@ -8,5 +8,6 @@ import { RecipeListComponent } from './recipe-list/recipe-list.component';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app works!';
+  title = 'Recipe Box';
+  subtitle = 'A place to store all your favorite recipes!';
 }
