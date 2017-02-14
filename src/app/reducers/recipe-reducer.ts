@@ -1,7 +1,10 @@
 import { Action } from 'redux';
 import { Recipe } from '../models';
 import { UserControl, ADD_RECIPE, AddRecipeAction,
-  SELECT_RECIPE, SelectRecipeAction } from '../actions';
+  SELECT_RECIPE, SelectRecipeAction,
+  EDIT_RECIPE, EditRecipeAction,
+  DELETE_RECIPE, DeleteRecipeAction,
+  UPDATE_USER_CONTROL, UpdateUserControlAction } from '../actions';
 
 /********** Application state interfaces **********/
 export interface RecipeEntities {
@@ -18,7 +21,7 @@ export interface RecipeState {
 const initialState: RecipeState = {
   names: [],
   currentRecipe: null,
-  recipes: null,
+  recipes: {},
   userControl: UserControl.View
 };
 
@@ -59,6 +62,64 @@ export const RecipeReducer =
           currentRecipe: recipeName,
           recipes: state.recipes,
           userControl: UserControl.View
+        };
+      }
+
+      case EDIT_RECIPE: {
+        const recipe = (<EditRecipeAction>action).recipe;
+        let names = state.names;
+        let otherRecipes = Object.assign({}, state.recipes);
+
+        // Delete recipe if name has changed
+        if (recipe.name !== state.currentRecipe) {
+          let idx = names.indexOf(state.currentRecipe);
+          names = [...names.slice(0, idx), ...names.slice(idx + 1), recipe.name];
+          delete otherRecipes[state.currentRecipe];
+        }
+
+        return {
+          names: names,
+          currentRecipe: null,
+          recipes: Object.assign(otherRecipes, {
+            [recipe.name]: recipe
+          }),
+          userControl: UserControl.View
+        };
+      }
+
+      case DELETE_RECIPE: {
+        const recipe = (<DeleteRecipeAction>action).recipe;
+        let recipeIdx = state.names.indexOf(recipe.name);
+
+        if (recipeIdx === -1) {
+          return state;
+        }
+
+        let otherRecipes = Object.assign({}, state.recipes);
+        delete otherRecipes[recipe.name];
+
+        return {
+          names: [...state.names.slice(0, recipeIdx),
+            ...state.names.slice(recipeIdx + 1)],
+          currentRecipe: null,
+          recipes: otherRecipes,
+          userControl: state.userControl
+        };
+      }
+
+      case UPDATE_USER_CONTROL: {
+        const userControl = (<UpdateUserControlAction>action).userControl;
+        let currentRecipe = state.currentRecipe;
+
+        if (userControl === UserControl.Add) {
+          currentRecipe = null;
+        }
+
+        return {
+          names: state.names,
+          currentRecipe: currentRecipe,
+          recipes: state.recipes,
+          userControl: userControl
         };
       }
 

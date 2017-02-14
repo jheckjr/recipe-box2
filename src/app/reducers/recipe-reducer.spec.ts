@@ -1,4 +1,9 @@
-import { UserControl, addRecipe, selectRecipe } from '../actions';
+import { UserControl,
+  addRecipe,
+  selectRecipe,
+  editRecipe,
+  deleteRecipe,
+  updateUserControl } from '../actions';
 import { Recipe } from '../models';
 import { RecipeReducer, RecipeState } from './recipe-reducer';
 
@@ -6,7 +11,7 @@ fdescribe('Recipe Reducers:', () => {
   const initialState: RecipeState = {
     names: [],
     currentRecipe: null,
-    recipes: null,
+    recipes: {},
     userControl: UserControl.View
   };
   let recipe: Recipe = {
@@ -60,5 +65,90 @@ fdescribe('Recipe Reducers:', () => {
     expect(state.currentRecipe).toEqual(recipe.name);
     state = RecipeReducer(state, selectRecipe(recipe.name));
     expect(state.currentRecipe).toBeNull();
+  });
+
+  it('should handle EDIT_RECIPE', () => {
+    let editedRecipe: Recipe = {
+      name: recipe.name,
+      ingredients: [
+        '1 pkt. oatmeal',
+        '2/3 cup water'
+      ]
+    };
+    let state = RecipeReducer(initialState, addRecipe(recipe));
+    state = RecipeReducer(state, editRecipe(editedRecipe));
+
+    expect(state.names).toContain(recipe.name);
+    expect(state.currentRecipe).toBeNull();
+    expect(state.recipes[editedRecipe.name]).toEqual(editedRecipe);
+    expect(state.userControl).toEqual(UserControl.View);
+  });
+
+  it('should handle EDIT_RECIPE when the name changes', () => {
+    let editedRecipe: Recipe = {
+      name: 'Cereal',
+      ingredients: [
+        '1 bowl cereal',
+        '1 cup milk'
+      ]
+    };
+    let state = RecipeReducer(initialState, addRecipe(recipe));
+    state = RecipeReducer(state, selectRecipe(recipe.name));
+    state = RecipeReducer(state, editRecipe(editedRecipe));
+
+    expect(state.names).toContain(editedRecipe.name);
+    expect(state.names).not.toContain(recipe.name);
+    expect(state.currentRecipe).toBeNull();
+    expect(state.recipes[editedRecipe.name]).toEqual(editedRecipe);
+    expect(state.recipes[recipe.name]).not.toBeDefined();
+    expect(state.userControl).toEqual(UserControl.View);
+  });
+
+  it('should handle DELETE_RECIPE', () => {
+    let state = RecipeReducer(initialState, addRecipe(recipe));
+    state = RecipeReducer(state, deleteRecipe(recipe));
+
+    expect(state).toEqual(initialState);
+  });
+
+  it('should handle DELETE_RECIPE when recipe doesn\'t exist', () => {
+    let secondRecipe: Recipe = {
+      name: 'Cereal',
+      ingredients: [
+        '1 bowl cereal',
+        '1 cup milk'
+      ]
+    };
+    let state = RecipeReducer(initialState, addRecipe(recipe));
+    let secondState = RecipeReducer(state, deleteRecipe(secondRecipe));
+
+    expect(secondState).toEqual(state);
+  });
+
+  it('should handle UPDATE_USER_CONTROL for Add', () => {
+    let state = RecipeReducer(initialState, addRecipe(recipe));
+    state = RecipeReducer(state, selectRecipe(recipe.name));
+    state = RecipeReducer(state, updateUserControl(UserControl.Add));
+
+    expect(state.userControl).toEqual(UserControl.Add);
+    expect(state.currentRecipe).toBeNull();
+  });
+
+  it('should handle UPDATE_USER_CONTROL for View', () => {
+    let state = RecipeReducer(initialState, addRecipe(recipe));
+    state = RecipeReducer(state, selectRecipe(recipe.name));
+    state = RecipeReducer(state, updateUserControl(UserControl.View));
+
+    expect(state.userControl).toEqual(UserControl.View);
+    expect(state.currentRecipe).toEqual(recipe.name);
+  });
+
+  it('should handle UPDATE_USER_CONTROL for Edit', () => {
+    let state = RecipeReducer(initialState, addRecipe(recipe));
+    state = RecipeReducer(state, selectRecipe(recipe.name));
+    state = RecipeReducer(state, updateUserControl(UserControl.Edit));
+
+    expect(state.userControl).toEqual(UserControl.Edit);
+    expect(state.currentRecipe).toEqual(recipe.name);
   });
 });
