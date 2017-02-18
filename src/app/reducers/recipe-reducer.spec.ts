@@ -7,7 +7,7 @@ import { UserControl,
 import { Recipe } from '../models';
 import { RecipeReducer, RecipeState } from './recipe-reducer';
 
-fdescribe('Recipe Reducers:', () => {
+describe('Recipe Reducers:', () => {
   const initialState: RecipeState = {
     names: [],
     currentRecipe: null,
