@@ -3,7 +3,7 @@ import { Recipe, sampleRecipe } from '../models';
 import { RecipeEntities } from '../reducers/recipe-reducer';
 import { getAllStoredRecipes, getAllStoredRecipeNames } from './local-storage-helper';
 
-fdescribe('Local Storage:', () => {
+describe('Local Storage:', () => {
   beforeEach(() => {
     localStorage.clear();
     testRecipes.forEach((recipe: Recipe) => {

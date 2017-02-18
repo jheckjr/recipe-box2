@@ -5,6 +5,7 @@ import { UserControl, ADD_RECIPE, AddRecipeAction,
   EDIT_RECIPE, EditRecipeAction,
   DELETE_RECIPE, DeleteRecipeAction,
   UPDATE_USER_CONTROL, UpdateUserControlAction } from '../actions';
+import * as LSHelper from '../local-storage-helper/local-storage-helper';
 
 /********** Application state interfaces **********/
 export interface RecipeEntities {
@@ -19,9 +20,9 @@ export interface RecipeState {
 };
 
 const initialState: RecipeState = {
-  names: [],
+  names: LSHelper.getAllStoredRecipeNames(),
   currentRecipe: null,
-  recipes: {},
+  recipes: LSHelper.getAllStoredRecipes(),
   userControl: UserControl.View
 };
 
@@ -36,6 +37,9 @@ export const RecipeReducer =
         if (!recipe || state.names.indexOf(recipe.name) !== -1) {
           return state;
         }
+
+        // Add to Local Storage
+        LSHelper.storeRecipe(recipe);
 
         return {
           names: [...state.names, recipe.name],
@@ -75,7 +79,10 @@ export const RecipeReducer =
           let idx = names.indexOf(state.currentRecipe);
           names = [...names.slice(0, idx), ...names.slice(idx + 1), recipe.name];
           delete otherRecipes[state.currentRecipe];
+          LSHelper.deleteStoredRecipe(state.currentRecipe);
         }
+
+        LSHelper.storeRecipe(recipe);
 
         return {
           names: names,
@@ -97,6 +104,7 @@ export const RecipeReducer =
 
         let otherRecipes = Object.assign({}, state.recipes);
         delete otherRecipes[recipe.name];
+        LSHelper.deleteStoredRecipe(recipe.name);
 
         return {
           names: [...state.names.slice(0, recipeIdx),
