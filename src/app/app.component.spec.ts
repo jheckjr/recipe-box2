@@ -45,6 +45,6 @@ describe('AppComponent', () => {
     let titleEl = fixture.debugElement.query(By.css('h1')).nativeElement;
     let subtitleEl = fixture.debugElement.query(By.css('h3')).nativeElement;
     expect(titleEl.textContent).toEqual('Recipe Box');
-    expect(subtitleEl.textContent).toEqual('A place to store all your favorite recipes!')
+    expect(subtitleEl.textContent).toEqual('A place to store all your favorite recipes!');
   });
 });

@@ -1,4 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { Store } from 'redux';
+
+import { AppStore } from './app-store';
+import { addRecipe } from './actions';
+import { RecipeState } from './reducers/recipe-reducer';
+import { Recipe } from './models';
 
 import { RecipeListComponent } from './recipe-list/recipe-list.component';
 
@@ -10,4 +16,9 @@ import { RecipeListComponent } from './recipe-list/recipe-list.component';
 export class AppComponent {
   title = 'Recipe Box';
   subtitle = 'A place to store all your favorite recipes!';
+
+  constructor( @Inject(AppStore) private store: Store<RecipeState>) {
+    // Initialize state
+    store.dispatch(addRecipe(null));
+  }
 }

@@ -80,7 +80,7 @@ describe('RecipeItemComponent:', () => {
     let contentEl = fixture.debugElement.query(By.css('.content'));
     expect(contentEl).toBeNull();
     expect(fixture.debugElement.query(By.css('app-recipe-edit'))).toBeNull();
-  })
+  });
 
   it('should emit a delete event when the delete button is clicked', () => {
     let deleteEvent: RecipeItemEvent = {

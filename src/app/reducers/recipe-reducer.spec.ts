@@ -8,7 +8,7 @@ import { Recipe } from '../models';
 import { RecipeReducer, RecipeState } from './recipe-reducer';
 import * as LSHelper from '../local-storage-helper/local-storage-helper';
 
-fdescribe('Recipe Reducers:', () => {
+describe('Recipe Reducers:', () => {
   let initialState: RecipeState;
   let recipe: Recipe = {
     name: 'Hot Chocolate',

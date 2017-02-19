@@ -5,7 +5,7 @@
   "angular-cli": {},
   "scripts": {
     "start": "node server.js",
-    "lint": "tslint \"src/**/*.ts\"",
+    "lint": "tslint --force \"src/**/*.ts\"",
     "test": "ng test --browsers PhantomJS",
     "pree2e": "webdriver-manager update",
     "e2e": "protractor",
@@ -27,6 +27,7 @@
     "express": "^4.14.0",
     "extract-text-webpack-plugin": "^2.0.0-rc.0",
     "redux": "^3.6.0",
+    "reselect": "^2.5.4",
     "rxjs": "^5.0.3",
     "ts-helpers": "^1.1.1",
     "typescript": "^2.1.5",
@@ -52,7 +53,7 @@
     "phantomjs": "^2.1.7",
     "protractor": "4.0.9",
     "ts-node": "1.2.1",
-    "tslint": "^4.0.2",
+    "tslint": "^4.4.2",
     "typescript": "^2.1.5",
     "webdriver-manager": "10.2.5"
   },

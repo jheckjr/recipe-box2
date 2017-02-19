@@ -1,4 +1,6 @@
 import { Action } from 'redux';
+import { createSelector } from 'reselect';
+
 import { Recipe } from '../models';
 import { UserControl, ADD_RECIPE, AddRecipeAction,
   SELECT_RECIPE, SelectRecipeAction,
@@ -135,3 +137,17 @@ export const RecipeReducer =
         return state;
     }
   };
+
+/********** Selectors **********/
+export const getRecipeEntities = (state): RecipeEntities => state.recipes;
+export const getAllRecipes = createSelector(
+  getRecipeEntities,
+  (entities: RecipeEntities) => Object.keys(entities)
+    .map((recipeName) => entities[recipeName])
+);
+export const getRecipeIndex = createSelector(
+  getRecipeEntities,
+  (state) => state.currentRecipe,
+  (entities: RecipeEntities, current: string) =>
+    Object.keys(entities).indexOf(current)
+);
