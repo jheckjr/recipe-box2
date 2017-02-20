@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Store } from 'redux';
 
 import { AppStore } from '../app-store';
 import { UserControl,
@@ -25,7 +24,7 @@ export class RecipeListComponent implements OnInit {
   userEditing: boolean;
   addRecipe: boolean;
 
-  constructor( @Inject(AppStore) private store: Store<RecipeState>) {
+  constructor( @Inject(AppStore) private store) {
     store.subscribe(() => this.updateState());
     this.updateState();
   }

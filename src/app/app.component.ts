@@ -1,5 +1,4 @@
 import { Component, Inject } from '@angular/core';
-import { Store } from 'redux';
 
 import { AppStore } from './app-store';
 import { addRecipe } from './actions';
@@ -17,7 +16,7 @@ export class AppComponent {
   title = 'Recipe Box';
   subtitle = 'A place to store all your favorite recipes!';
 
-  constructor( @Inject(AppStore) private store: Store<RecipeState>) {
+  constructor( @Inject(AppStore) private store) {
     // Initialize state
     store.dispatch(addRecipe(null));
   }

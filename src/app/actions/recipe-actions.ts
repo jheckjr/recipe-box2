@@ -1,5 +1,6 @@
 import { Action, ActionCreator } from 'redux';
 import { Recipe } from '../models';
+import { UserControl } from './user-control';
 
 /********** Add Recipe Action **********/
 export const ADD_RECIPE = '[Recipe] Add';

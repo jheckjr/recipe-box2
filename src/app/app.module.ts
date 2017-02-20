@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {
   createStore,
-  Store,
   compose,
   StoreEnhancer
 } from 'redux';
@@ -21,8 +20,12 @@ import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 let devtools: StoreEnhancer<RecipeState> =
   window['devToolsExtension'] ? window['devToolsExtension']() : f => f;
 
-let store: Store<RecipeState> = createStore<RecipeState>(RecipeReducer,
+let store = createStore<RecipeState>(RecipeReducer,
   compose(devtools));
+
+export function storeFactory() {
+  return store;
+}
 
 @NgModule({
   declarations: [
@@ -37,7 +40,7 @@ let store: Store<RecipeState> = createStore<RecipeState>(RecipeReducer,
     ReactiveFormsModule,
     HttpModule
   ],
-  providers: [{ provide: AppStore, useFactory: () => store }],
+  providers: [{ provide: AppStore, useFactory: storeFactory }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
