@@ -10,10 +10,9 @@
 }
 .content {
   margin: 0;
-  padding: .5em 1em 1.5em 1em;
 }
 .item-pad {
-  padding-left: 20px;
+  padding-left: 0 0 10px 20px;
   -webkit-animation-iteration-count: 1;
   animation-iteration-count: 1;
   -webkit-animation-duration: .3s;
@@ -83,7 +82,6 @@ button {
 }
 button.edit {
   background-color: #2185D0;
-
 }
 button.delete {
   background-color: #DB2828;

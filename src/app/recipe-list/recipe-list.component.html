@@ -6,7 +6,7 @@
       (buttonClicked)="handleRecipeEvent($event)"
       (toggleSelected)="handleRecipeToggle($event)"></app-recipe-item>
   <div *ngIf="addRecipe"
-      class="recipetitle">
+      class="recipe-title">
     Add New Recipe
   </div>
   <app-recipe-edit [recipe]="null"

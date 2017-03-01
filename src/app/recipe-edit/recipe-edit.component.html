@@ -1,9 +1,9 @@
-<form class="form"
+<form class="form edit-pad"
     [formGroup]="formGroup"
     novalidate
     (ngSubmit)="saveRecipe(formGroup)">
 
-  <div class="form-group required"
+  <div class="form-group name-input required"
       [class.error]="formGroup.controls.name.invalid && formGroup.controls.name.touched">
     <label>Name</label>
     <input type="text"
@@ -14,7 +14,7 @@
     </small>
   </div>
 
-  <div class="required"
+  <div class="ingredient-group required"
       formArrayName="ingredients"
       [class.error]="formGroup.controls.ingredients.invalid && formGroup.controls.ingredients.controls[formGroup.controls.ingredients.length - 1].touched">
     <label>Ingredients</label>
