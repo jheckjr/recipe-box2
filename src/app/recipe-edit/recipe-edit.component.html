@@ -20,9 +20,10 @@
     <label>Ingredients</label>
     <div class="ingredient-input"
         *ngFor="let ingredient of formGroup.controls.ingredients.controls; let idx=index">
-      <i class="remove"
+      <i class="fa fa-times remove"
           *ngIf="formGroup.controls.ingredients.controls.length > 1"
-          (click)="removeIngredient(idx)">X</i>
+          (click)="removeIngredient(idx)"
+          aria-hidden="true"></i>
       <input type="text"
           class="form-control"
           [formControl]="formGroup.controls.ingredients.controls[idx]">

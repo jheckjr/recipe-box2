@@ -1,5 +1,5 @@
 .edit-pad {
-  padding-left: 20px;
+  padding: 0 0 1em 1.5em;
 }
 .form {
   font-size: 1rem;
@@ -9,16 +9,20 @@
 }
 .name-input {
   width: 50%;
-  margin: 0 0 1em 0;
+  margin: 0 0 0.5em 0;
   clear: both;
 }
 label {
-  display: block;
-  margin: 0 0 .28571429rem;
-  color: rgba(0,0,0,.87);
-  font-size: .92857143em;
+  font-size: 0.8em;
+  border: none;
+  margin: -.14285em 0 0.5rem 0;
+  padding: 0;
+  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
   font-weight: 700;
+  line-height: 1.2857em;
   text-transform: none;
+  color: rgba(0,0,0,.87);
+  display: block;
 }
 input {
   margin: 0;
@@ -26,9 +30,9 @@ input {
   width: 100%;
   vertical-align: top;
   -webkit-appearance: none;
-  line-height: 1.2142em;
-  padding: .67861429em 1em;
-  font-size: 1em;
+  line-height: 0.8em;
+  padding: 0.3em 0.6em;
+  font-size: 0.8em;
   background: #FFF;
   border: 1px solid rgba(34,36,38,.15);
   color: rgba(0,0,0,.87);
@@ -40,32 +44,28 @@ input {
 .ingredient-group {
   width: 93.75%;
   clear: both;
-  margin: 0 0 1em 0;
+  margin: 0 0 0.5em 0;
 }
 .ingredient-input {
   padding-bottom: 5px;
+  width: 93.75%;
 }
 i.remove {
   position: absolute;
-  padding: 10px;
   right: 0px;
-  padding-right: 2%;
+  padding: 0.2em 0.6em 0.3em 0;
   display: inline-block;
-  opacity: 1;
-  margin: 0 .25rem 0 0;
-  width: 1.18em;
+  width: 6.25%;
   height: 1em;
-  font-family: Icons;
-  font-style: normal;
-  font-weight: 400;
-  text-decoration: inherit;
   text-align: center;
-  speak: none;
 }
 .add {
   background: 0 0;
   color: #4183C4;
-  text-decoration: none;
+  font-size: 0.8em;
+}
+button {
+  margin-top: 10px;
 }
 .save {
   box-shadow: 0 0 0 0 rgba(34,36,38,.15) inset;
@@ -80,16 +80,15 @@ i.remove {
   outline: 0;
   border: none;
   vertical-align: baseline;
-  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
   margin: 0 .25em 0 0;
-  padding: .78571429em 1.5em;
+  padding: .75em 1.25em;
   text-transform: none;
   font-weight: 700;
   line-height: 1em;
   font-style: normal;
   text-align: center;
   text-decoration: none;
-  border-radius: .28571429rem;
+  border-radius: .29rem;
 }
 .cancel {
   font-size: .85714286rem;
@@ -99,10 +98,10 @@ i.remove {
   outline: 0;
   border: none;
   vertical-align: baseline;
-  background: #E0E1E2;
+  background-color: #E0E1E2;
   color: rgba(0,0,0,.6);
-  margin: 0 .25em 0 0;
-  padding: .78571429em 1.5em;
+  margin-right: 0.25em;
+  padding: .75em 1.25em;
   text-transform: none;
   text-shadow: none;
   font-weight: 700;
@@ -110,7 +109,7 @@ i.remove {
   font-style: normal;
   text-align: center;
   text-decoration: none;
-  border-radius: .28571429rem;
+  border-radius: .29rem;
   box-shadow: 0 0 0 1px transparent inset,0 0 0 0 rgba(34,36,38,.15) inset;
   transition: opacity .1s ease,background-color .1s ease,color .1s ease,box-shadow .1s ease,background .1s ease;
   -webkit-transition: opacity .1s ease,background-color .1s ease,color .1s ease,box-shadow .1s ease,background .1s ease;

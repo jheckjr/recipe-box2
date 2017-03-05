@@ -8,11 +8,8 @@
   transition: background .1s ease,color .1s ease;
   cursor: pointer;
 }
-.content {
-  margin: 0;
-}
 .item-pad {
-  padding-left: 0 0 10px 20px;
+  padding: 0 0 1em 1.5em;
   -webkit-animation-iteration-count: 1;
   animation-iteration-count: 1;
   -webkit-animation-duration: .3s;
