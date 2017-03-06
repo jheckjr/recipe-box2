@@ -56,9 +56,10 @@ export const RecipeReducer =
       case SELECT_RECIPE: {
         let recipeName = (<SelectRecipeAction>action).recipeName;
 
-        if (state.names.indexOf(recipeName) === -1) {
+        if (recipeName != null && state.names.indexOf(recipeName) === -1) {
           return state;
         }
+
         if (state.currentRecipe === recipeName) {
           recipeName = null;
         }

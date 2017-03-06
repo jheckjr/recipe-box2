@@ -1,8 +1,6 @@
 .box {
   max-width: 500px;
-  margin: auto;
-  margin-top: 2%;
-  margin-bottom: 3%;
+  margin: 2% auto 3% auto;
 }
 .box-header {
   margin: auto;
@@ -11,9 +9,8 @@
   padding-top: 2%;
   font-size: 2rem;
   font-weight: 700;
-  line-height: 1.2857em;
+  line-height: 1.29em;
   text-transform: none;
-  color: rgba(0,0,0,.87);
 }
 .box-subheader {
   padding: 0;

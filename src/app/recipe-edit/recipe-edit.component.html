@@ -8,6 +8,7 @@
     <label>Name</label>
     <input type="text"
         class="form-control"
+        maxlength="255"
         formControlName="name">
     <small *ngIf="formGroup.controls.name.invalid && formGroup.controls.name.touched">
       Recipe name is required.
@@ -26,6 +27,7 @@
           aria-hidden="true"></i>
       <input type="text"
           class="form-control"
+          maxlength="255"
           [formControl]="formGroup.controls.ingredients.controls[idx]">
     </div>
     <small *ngIf="formGroup.controls.ingredients.invalid && formGroup.controls.ingredients.controls[formGroup.controls.ingredients.length - 1].touched">
@@ -39,10 +41,10 @@
     </a>
   </div>
 
-  <button class="save"
+  <button class="save-button"
       type="submit"
       [disabled]="formGroup.invalid">Save</button>
-  <button class="cancel"
+  <button class="cancel-button"
       type="button"
       (click)="cancelClicked($event)">Cancel</button>
 </form>

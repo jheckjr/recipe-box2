@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 
 import { AppStore } from '../app-store';
 import { UserControl,
@@ -18,7 +18,7 @@ import { Recipe, RecipeItemEventType, RecipeItemEvent } from '../models';
   templateUrl: './recipe-list.component.html',
   styleUrls: ['./recipe-list.component.css']
 })
-export class RecipeListComponent implements OnInit {
+export class RecipeListComponent {
   recipes: Recipe[];
   currentRecipe: string;
   userEditing: boolean;
@@ -27,10 +27,6 @@ export class RecipeListComponent implements OnInit {
   constructor( @Inject(AppStore) private store) {
     store.subscribe(() => this.updateState());
     this.updateState();
-  }
-
-  ngOnInit() {
-
   }
 
   updateState() {
@@ -66,12 +62,7 @@ export class RecipeListComponent implements OnInit {
 
   // Show/hide a recipe
   handleRecipeToggle(recipeName: string) {
-    if (this.currentRecipe === recipeName) {
-      this.store.dispatch(selectRecipe(null));
-    } else {
-      this.store.dispatch(selectRecipe(recipeName));
-    }
-    this.addRecipe = false;
+    this.store.dispatch(selectRecipe(recipeName));
   }
 
   // Add button clicked

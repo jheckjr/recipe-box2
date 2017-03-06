@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 
 import { RecipeEditComponent } from '../recipe-edit/recipe-edit.component';
 import { Recipe, RecipeItemEvent, RecipeItemEventType } from '../models';
@@ -8,7 +8,7 @@ import { Recipe, RecipeItemEvent, RecipeItemEventType } from '../models';
   templateUrl: './recipe-item.component.html',
   styleUrls: ['./recipe-item.component.css']
 })
-export class RecipeItemComponent implements OnInit {
+export class RecipeItemComponent {
   @Input() recipe: Recipe;
   @Input() selected: boolean;
   @Input() userEdit: boolean;
@@ -19,8 +19,6 @@ export class RecipeItemComponent implements OnInit {
     this.buttonClicked = new EventEmitter<RecipeItemEvent>();
     this.toggleSelected = new EventEmitter<string>();
   }
-
-  ngOnInit() { }
 
   editClicked(event: any) {
     let editEvent: RecipeItemEvent = {
