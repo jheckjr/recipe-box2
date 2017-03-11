@@ -4,8 +4,8 @@ import { UserControl,
   editRecipe,
   deleteRecipe,
   updateUserControl } from '../actions';
-import { Recipe } from '../models';
-import { RecipeReducer, RecipeState } from './recipe-reducer';
+import { Recipe, sampleRecipe } from '../models';
+import { RecipeReducer, RecipeState, RecipeEntities } from './recipe-reducer';
 import * as LSHelper from '../local-storage-helper/local-storage-helper';
 
 describe('Recipe Reducers:', () => {
@@ -21,15 +21,18 @@ describe('Recipe Reducers:', () => {
   beforeEach(() => {
     localStorage.clear();
     initialState = {
-      names: LSHelper.getAllStoredRecipeNames(),
+      names: [sampleRecipe.name],
       currentRecipe: null,
-      recipes: LSHelper.getAllStoredRecipes(),
+      recipes: Object.assign({}, {
+        [sampleRecipe.name]: sampleRecipe
+      }),
       userControl: UserControl.View
     };
   });
 
   it('should handle initial state', () => {
-    expect(RecipeReducer(undefined, {})).toEqual(initialState);
+    localStorage.clear();
+    expect(RecipeReducer(initialState, {})).toEqual(initialState);
   });
 
   it('should handle ADD_RECIPE', () => {

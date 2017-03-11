@@ -49,10 +49,10 @@ describe('RecipeItemComponent:', () => {
   });
 
   it('should initialize the text', () => {
-    let titleEl = fixture.debugElement.query(By.css('.title')).nativeElement;
+    let titleEl = fixture.debugElement.query(By.css('div.title')).nativeElement;
     expect(titleEl.innerHTML).toContain(recipe.name);
 
-    let ingredientEls = fixture.debugElement.queryAll(By.css('.item'));
+    let ingredientEls = fixture.debugElement.queryAll(By.css('div.item'));
     expect(ingredientEls.length).toEqual(2);
     expect(ingredientEls[0].nativeElement.innerHTML)
       .toContain(recipe.ingredients[0]);
@@ -61,7 +61,7 @@ describe('RecipeItemComponent:', () => {
   });
 
   it('should show non-editable content if userEdit false', () => {
-    let contentEl = fixture.debugElement.query(By.css('.content')).nativeElement;
+    let contentEl = fixture.debugElement.query(By.css('div.item-pad')).nativeElement;
     expect(contentEl).toBeDefined();
     expect(fixture.debugElement.query(By.css('app-recipe-edit'))).toBeNull();
   });
@@ -69,7 +69,7 @@ describe('RecipeItemComponent:', () => {
   it('should show editable content if userEdit true', () => {
     component.userEdit = true;
     fixture.detectChanges();
-    let contentEl = fixture.debugElement.query(By.css('.content'));
+    let contentEl = fixture.debugElement.query(By.css('div.item-pad'));
     expect(contentEl).toBeNull();
     expect(fixture.debugElement.query(By.css('app-recipe-edit'))).toBeDefined();
   });
@@ -77,7 +77,7 @@ describe('RecipeItemComponent:', () => {
   it('should not show content if selected false', () => {
     component.selected = false;
     fixture.detectChanges();
-    let contentEl = fixture.debugElement.query(By.css('.content'));
+    let contentEl = fixture.debugElement.query(By.css('div.item-pad'));
     expect(contentEl).toBeNull();
     expect(fixture.debugElement.query(By.css('app-recipe-edit'))).toBeNull();
   });
@@ -107,7 +107,7 @@ describe('RecipeItemComponent:', () => {
   });
 
   it('should emit a toggle event when the title is clicked', () => {
-    let titleEl = fixture.debugElement.query(By.css('.title')).nativeElement;
+    let titleEl = fixture.debugElement.query(By.css('div.title')).nativeElement;
     titleEl.dispatchEvent(new Event('click'));
     fixture.detectChanges();
 

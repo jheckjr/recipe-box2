@@ -1,5 +1,5 @@
 import { testRecipes } from '../recipe-list/test/test-recipes';
-import { Recipe, sampleRecipe } from '../models';
+import { Recipe } from '../models';
 import { RecipeEntities } from '../reducers/recipe-reducer';
 import { getAllStoredRecipes, getAllStoredRecipeNames } from './local-storage-helper';
 
@@ -19,12 +19,11 @@ describe('Local Storage:', () => {
     });
   });
 
-  it('should get the sample recipe when none stored', () => {
+  it('should get no recipes when none stored', () => {
     localStorage.clear();
     let recipes: RecipeEntities = getAllStoredRecipes();
 
-    expect(recipes[sampleRecipe.name]).toEqual(sampleRecipe);
-    expect(Object.keys(recipes).length).toEqual(1);
+    expect(recipes).toEqual({});
   });
 
   it('should get all stored recipe names', () => {
@@ -36,11 +35,10 @@ describe('Local Storage:', () => {
     });
   });
 
-  it('should get the sample recipe name when none stored', () => {
+  it('should get no recipe name when none stored', () => {
     localStorage.clear();
     let recipeNames: string[] = getAllStoredRecipeNames();
 
-    expect(recipeNames.length).toEqual(1);
-    expect(recipeNames).toContain(sampleRecipe.name);
+    expect(recipeNames.length).toEqual(0);
   });
 });

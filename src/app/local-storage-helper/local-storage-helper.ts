@@ -1,4 +1,4 @@
-import { Recipe, sampleRecipe } from '../models';
+import { Recipe } from '../models';
 import { RecipeEntities } from '../reducers/recipe-reducer';
 
 export const storeRecipe = (recipe: Recipe) => {
@@ -12,18 +12,11 @@ export const deleteStoredRecipe = (recipeName: string) => {
 export const getAllStoredRecipes = (): RecipeEntities => {
   let recipes: RecipeEntities = {};
 
-  if (localStorage.length > 0) {
-    for (let i = 0; i < localStorage.length; i++) {
-      let recipeName = localStorage.key(i);
-      let recipe: Recipe = JSON.parse(localStorage.getItem(recipeName));
-      recipes = Object.assign(recipes, {
-        [recipeName]: recipe
-      });
-    }
-  } else {
-    storeRecipe(sampleRecipe);
+  for (let i = 0; i < localStorage.length; i++) {
+    let recipeName = localStorage.key(i);
+    let recipe: Recipe = JSON.parse(localStorage.getItem(recipeName));
     recipes = Object.assign(recipes, {
-      [sampleRecipe.name]: sampleRecipe
+      [recipeName]: recipe
     });
   }
 
@@ -33,13 +26,8 @@ export const getAllStoredRecipes = (): RecipeEntities => {
 export const getAllStoredRecipeNames = (): string[] => {
   let recipeNames: string[] = [];
 
-  if (localStorage.length > 0) {
-    for (let i = 0; i < localStorage.length; i++) {
-      recipeNames.push(localStorage.key(i));
-    }
-  } else {
-    storeRecipe(sampleRecipe);
-    recipeNames = [sampleRecipe.name];
+  for (let i = 0; i < localStorage.length; i++) {
+    recipeNames.push(localStorage.key(i));
   }
 
   return recipeNames;

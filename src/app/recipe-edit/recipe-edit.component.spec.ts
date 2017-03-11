@@ -74,7 +74,7 @@ describe('RecipeEditComponent:', () => {
       eventType: RecipeItemEventType.Save,
       recipe: recipe
     };
-    let saveButton = fixture.debugElement.query(By.css('button.save')).nativeElement;
+    let saveButton = fixture.debugElement.query(By.css('button.save-button')).nativeElement;
     saveButton.dispatchEvent(new Event('click'));
     fixture.detectChanges();
 
@@ -86,7 +86,7 @@ describe('RecipeEditComponent:', () => {
       eventType: RecipeItemEventType.Cancel,
       recipe: null
     };
-    let cancelButton = fixture.debugElement.query(By.css('button.cancel')).nativeElement;
+    let cancelButton = fixture.debugElement.query(By.css('button.cancel-button')).nativeElement;
     cancelButton.dispatchEvent(new Event('click'));
     fixture.detectChanges();
 
@@ -173,7 +173,7 @@ describe('RecipeEditComponent null recipe input:', () => {
   });
 
   it('should disable the save button', () => {
-    let saveButton = fixture.debugElement.query(By.css('button.save')).nativeElement;
+    let saveButton = fixture.debugElement.query(By.css('button.save-button')).nativeElement;
 
     expect(saveButton.disabled).toBeTruthy();
   });
@@ -183,7 +183,7 @@ describe('RecipeEditComponent null recipe input:', () => {
       eventType: RecipeItemEventType.Cancel,
       recipe: null
     };
-    let cancelButton = fixture.debugElement.query(By.css('button.cancel')).nativeElement;
+    let cancelButton = fixture.debugElement.query(By.css('button.cancel-button')).nativeElement;
     cancelButton.dispatchEvent(new Event('click'));
     fixture.detectChanges();
 

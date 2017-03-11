@@ -3,17 +3,27 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { createStore } from 'redux';
+
+import { AppStore } from '../app-store';
+import { RecipeState, RecipeReducer, getAllRecipes } from '../reducers/recipe-reducer';
+import { addRecipe } from '../actions';
 
 import { RecipeListComponent } from './recipe-list.component';
 import { RecipeItemComponent } from '../recipe-item/recipe-item.component';
 import { RecipeEditComponent } from '../recipe-edit/recipe-edit.component';
 
 import { testRecipes } from './test/test-recipes';
-import { RecipeItemEvent, RecipeItemEventType } from '../models';
+import { Recipe, RecipeItemEvent, RecipeItemEventType } from '../models';
 
 describe('RecipeListComponent:', () => {
   let component: RecipeListComponent;
   let fixture: ComponentFixture<RecipeListComponent>;
+
+  let store = createStore<RecipeState>(RecipeReducer);
+  function storeFactory() {
+    return store;
+  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -23,16 +33,21 @@ describe('RecipeListComponent:', () => {
         RecipeEditComponent
       ],
       imports: [ReactiveFormsModule],
-      providers: [FormBuilder]
+      providers: [FormBuilder,
+        { provide: AppStore, useFactory: storeFactory }
+      ]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RecipeListComponent);
+    testRecipes.forEach((recipe: Recipe) => {
+      store.dispatch(addRecipe(recipe));
+    });
     component = fixture.componentInstance;
-    component.recipes = testRecipes;
-    component.currentRecipe = testRecipes[0].name;
+    component.recipes = getAllRecipes(store.getState());
+    component.currentRecipe = component.recipes[0].name;
     component.userEditing = false;
     component.addRecipe = false;
 
@@ -44,14 +59,14 @@ describe('RecipeListComponent:', () => {
 
   it('should initialize the component', () => {
     expect(component).toBeTruthy();
-    expect(component.recipes).toEqual(testRecipes);
-    expect(component.currentRecipe).toEqual(testRecipes[0].name);
+    expect(component.recipes).toEqual(getAllRecipes(store.getState()));
+    expect(component.currentRecipe).toEqual(component.recipes[0].name);
     expect(component.userEditing).toBeFalsy();
   });
 
   it('should display a list of RecipeItemComponents', () => {
     let recipeList = fixture.debugElement.queryAll(By.css('app-recipe-item'));
-    expect(recipeList.length).toEqual(testRecipes.length);
+    expect(recipeList.length).toEqual(component.recipes.length);
     expect(fixture.debugElement.query(By.css('app-recipe-edit.add-recipe'))).toBeNull();
   });
 
@@ -125,8 +140,6 @@ describe('RecipeListComponent:', () => {
   });
 
   it('should handle delete events', () => {
-    component.currentRecipe = testRecipes[0].name;
-    fixture.detectChanges();
     let deleteEvent: RecipeItemEvent = {
       eventType: RecipeItemEventType.Delete,
       recipe: testRecipes[0]
@@ -141,6 +154,8 @@ describe('RecipeListComponent:', () => {
   });
 
   it('should handle save events', () => {
+    component.addRecipe = true;
+    fixture.detectChanges();
     let saveEvent: RecipeItemEvent = {
       eventType: RecipeItemEventType.Save,
       recipe: {
@@ -154,8 +169,6 @@ describe('RecipeListComponent:', () => {
 
     expect(component.recipes.length).toEqual(numRecipes + 1);
     expect(component.recipes[numRecipes].name).toEqual(saveEvent.recipe.name);
-    expect(component.currentRecipe).toEqual(saveEvent.recipe.name);
+    expect(component.currentRecipe).toBeNull();
   });
-
-  // Add editcomponent
 });
